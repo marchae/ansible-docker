@@ -1,0 +1,23 @@
+- name: Create container
+  docker_image:
+    name: "{{ image_name }}"
+    path: "{{ playbook_dir }}/.."
+    dockerfile: "{{ dockerfile }}"
+    state: build
+
+- name: Start container
+  docker:
+    image: "{{ image_name }}"
+    name: "{{ container_name }}"
+    pull: missing
+    detach: yes
+    # Workaround for: https://github.com/ansible/ansible-modules-core/issues/1885
+    net: bridge
+    tty: yes
+    command: sleep infinity
+    state: reloaded
+
+# dynamically update inventory to make it available down the playbook
+- name: Register container
+  add_host: 
+    name: "{{ host_name }}"

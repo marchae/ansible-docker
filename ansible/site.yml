@@ -1,0 +1,15 @@
+- hosts: localhost
+  connection: local
+  roles:
+    - { role: start-container, host_name: example, image_name: example, container_name: example, dockerfile: Dockerfile }
+
+- hosts: example
+  connection: docker
+  roles:
+    - java
+    - python3
+
+- hosts: localhost
+  connection: local
+  roles:
+    - { role: stop-container, image_name: example, container_name: example }
