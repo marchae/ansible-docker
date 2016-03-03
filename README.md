@@ -4,6 +4,7 @@ Ansible playbook for building docker images
 ### Why
 While docker containers is useful for various tasks process of their creation
 leaves something to be desired:
+
 1) RUN instructions in Dockerfile limited to simple commands
 2) Poor reusability. You can't reuse RUN command from another Dockerfile
 without inheriting from it or copying it
