@@ -5,12 +5,10 @@ Ansible playbook for building docker images
 While docker containers is useful for various tasks process of their creation
 leaves something to be desired:
 
-1) RUN instructions in Dockerfile limited to simple commands
-
-2) Poor reusability. You can't reuse RUN command from another Dockerfile
+1. RUN instructions in Dockerfile limited to simple commands
+2. Poor reusability. You can't reuse RUN command from another Dockerfile
 without inheriting from it or copying it
-
-3) What if you want recreate docker image on bare metal, VM or some other
+3. What if you want recreate docker image on bare metal, VM or some other
 container runtime?
 
 To solve this problems we could use existing provisioning tools such as Ansible
