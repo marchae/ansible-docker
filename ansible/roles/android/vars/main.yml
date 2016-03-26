@@ -1,0 +1,3 @@
+android_sdk_dir: "{{ user_opt_dir }}/android-sdk-linux"
+android_sdk_url: "http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz"
+android_sdk_components: "tools,platform-tools,build-tools-23.0.3,android-23,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,extra-google-play_billing"

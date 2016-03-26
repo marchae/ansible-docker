@@ -1,0 +1,34 @@
+- name: Install pexpect
+  apt: name=python-pexpect state=latest update_cache=yes
+
+- name: Check Android SDK
+  stat: path={{ android_sdk_dir }}
+  register: android_sdk_dir_stat
+
+- name: Download Android SDK
+  get_url:
+    url: "{{ android_sdk_url }}"
+    dest: "/tmp/android-sdk.tgz"
+  when: not android_sdk_dir_stat.stat.exists
+  changed_when: false
+
+- name: Install Android SDK
+  unarchive:
+    copy: no
+    src: "/tmp/android-sdk.tgz"
+    dest: "{{ user_opt_dir }}"
+  when: not android_sdk_dir_stat.stat.exists
+  changed_when: false
+
+- name: Delete Android SDK archive
+  file: path="/tmp/android-sdk.tgz" state=absent
+  when: not android_sdk_dir_stat.stat.exists
+  changed_when: false
+
+- name: Install Android SDK components
+  expect: 
+    command: "{{ android_sdk_dir }}/tools/android update sdk --no-ui --all --filter {{ android_sdk_components }}"
+    echo: yes
+    timeout: 3600
+    responses:
+      "y/n": "y"
