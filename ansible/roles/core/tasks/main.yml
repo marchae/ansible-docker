@@ -1,0 +1,11 @@
+- name: Enable 32-bit support
+  command: dpkg --add-architecture i386
+  changed_when: false
+
+- name: Install 32-bit packages
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - libgcc1:i386 
+    - libstdc++6:i386 
+    - zlib1g:i386
+    - libncurses5:i386
