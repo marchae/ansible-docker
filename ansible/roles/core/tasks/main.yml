@@ -2,6 +2,9 @@
   command: dpkg --add-architecture i386
   changed_when: false
 
+- name: Install git
+  apt: name=git state=latest update_cache=yes
+
 - name: Install 32-bit packages
   apt: name={{ item }} state=latest update_cache=yes
   with_items:
