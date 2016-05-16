@@ -1,17 +1,11 @@
 - hosts: localhost
   connection: local
   roles:
-    - { role: start-container, host_name: example, image_name: example, container_name: example, dockerfile: Dockerfile }
     - { role: start-container, host_name: android, image_name: android, container_name: android, dockerfile: Dockerfile }
-
-- hosts: example
-  connection: docker
-  roles:
-    - java
-    - python3
 
 - hosts: android
   connection: docker
+  remote_user: root
   roles:
     - core
     - java
@@ -20,5 +14,4 @@
 - hosts: localhost
   connection: local
   roles:
-    - { role: stop-container, image_name: example, container_name: example }
     - { role: stop-container, image_name: android, container_name: android }
