@@ -10,6 +10,8 @@ from ansible import constants as C
 from ansible.plugins.callback import CallbackBase
 from ansible.utils.color import colorize, hostcolor
 
+from pprint import pprint
+
 class DockerDriver(object):
     """ Provide snapshot feature through 'docker commit'. """
 
@@ -28,8 +30,8 @@ class DockerDriver(object):
         docker_host = os.getenv('DOCKER_HOST', 'unix:///var/run/docker.sock')
         # default version is current stable docker release (10/07/2015)
         # if provided, DOCKER_VERSION should match docker server api version
-        docker_server_version = os.getenv('DOCKER_VERSION', '1.19')
-        self._client = docker.Client(base_url=docker_host,
+        docker_server_version = os.getenv('DOCKER_VERSION', '1.21')
+        self._client = docker.APIClient(base_url=docker_host,
                 version=docker_server_version, timeout=120)
         return self._client.ping()
 
@@ -41,13 +43,14 @@ class DockerDriver(object):
         return matchs[0] if len(matchs) == 1 else None
 
     def snapshot(self, host, task):
-        tag = hashlib.md5(repr(task)).hexdigest()
+#        tag = hashlib.md5(repr(task)).hexdigest()
         container = self.target_container(host)
         if container is None:
             return
         try:
             feedback = self._client.commit(container=container['Id'],
-                repository=host, tag=tag, author=self._author)
+#                repository=host, tag=tag, author=self._author)
+                repository=host, tag='latest', author=self._author)
         except docker.errors.APIError, error:
             self.disabled = True
             ansible.utils.warning('Failed to commit container: {}'.format(error))

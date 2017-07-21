@@ -23,9 +23,10 @@ packages required by used Ansible modules
 
 Run
 ```
-ansible-playbook --module-path=ansible/modules/docker ansible/site.yml
+ansible-playbook ansible/site.yml
 ```
 after that you should have image with expected name. Tag and push it if needed.
+Actual only tag=latest is supported with cache layer.
 
 ### Under the hood
 You maybe wondering why not just install ansible in container, mount playbook 

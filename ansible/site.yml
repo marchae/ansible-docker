@@ -6,7 +6,7 @@
 - hosts: example
   connection: docker
   roles:
-    - java
+#    - java
     - python3
 
 - hosts: localhost
